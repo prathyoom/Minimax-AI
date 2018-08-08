@@ -6,57 +6,6 @@ long note;
 for(int i1=0;i1<7;i1++)
 a[i1]="------";
 
-long max(int num)
-{
-    if(num>5)
-        return score();
-    long i,nux=0,check=0;
-    for(i=0;i<7;i++)
-    {
-        char c[7][6]=a;
-        if(update('x',i)==0)
-            {check++;continue;}
-        long y=min(num);
-        if(nux<y)
-            {
-                nux=y;
-                if(num==1)
-                note=i;
-            }    
-        a=c;
-    }
-    if(check>5)
-    return score();
-    else
-    return nux;
-}
-
-long min(int num)
-{
-     long i,nux=0,check=0;
-    for(i=0;i<7;i++)
-    {
-        char c[7][6]=a;
-        if(update('x',i)==0)
-            {check++;continue;}
-        long y=min(num);
-        if(nux<y)
-            {
-                nux=y;
-            }
-        a=c;
-    }
-    if(check>5)
-    return score();
-    else
-    return nux;
-}
-
-void revert()
-{
-    a=b;
-}
-
 bool update(char who,int x)
 {
     int i=0;
@@ -66,6 +15,7 @@ bool update(char who,int x)
     else
     {a[x][i]=who;return true;}
 }
+
 
 int score()
 {
@@ -166,6 +116,63 @@ int score()
     return sum;   
 }
 
+long Max(int num)
+{
+    if(num>5)
+        return score();
+    long i,nux=0,check=0;
+    for(i=0;i<7;i++)
+    {
+        char c[7][6]=a;
+        if(update('x',i)==0)
+            {check++;continue;}
+        long y=Min(num);
+        if(nux<y)
+            {
+                nux=y;
+                if(num==1)
+                note=i;
+            }    
+        for(int i1=0;i1<7;i1++)
+	       for(int j1=0;j1<6;j1++)
+	           a[i1][j1]=c[i1][j1];
+    }
+    if(check>5)
+    return score();
+    else
+    return nux;
+}
+
+long Min(int num)
+{
+    long i,nux=1000,check=0;
+    for(i=0;i<7;i++)
+    {
+        char c[7][6]=a;
+        if(update('x',i)==0)
+            {check++;continue;}
+        long y=Max(num+1);
+        if(nux>y)
+            {
+                nux=y;
+            }
+        for(int i1=0;i1<7;i1++)
+	       for(int j1=0;j1<6;j1++)
+	           a[i1][j1]=c[i1][j1];
+    }
+    if(check>5)
+    return score();
+    else
+    return nux;
+}
+
+void revert()
+{
+    for(int i1=0;i1<7;i1++)
+	   for(int j1=0;j1<6;j1++)
+           a[i1][j1]=b[i1][j1];
+}
+
 int gameover()
 {
     long i,j,k,l,c,sum=0;
@@ -232,10 +239,22 @@ int gameover()
     return 0;
 }
 
+void print()
+{
+    long i,j;
+    for(i=0;i<7;i++)
+    {
+        for(j=0;j<6;j++)
+            cout<<a[i][j]<<" ";
+        cout<<endl;
+    }
+}
+
 int main() {
 	long n,x,i;
 	for(i=0;i<42;i++)
 	{
+	    print();
 	    if(gameover())
 	    break;
 	    if(i%2==0)
@@ -247,7 +266,9 @@ int main() {
 	                cout<<"Enter again :')\n";
 	                goto o;
 	            }
-	            b=a;
+	            for(int i1=0;i1<7;i1++)
+	            for(int j1=0;j1<6;j1++)
+	            b[i1][j1]=a[i1][j1];
 	        }
 	            
 	    else
@@ -255,7 +276,9 @@ int main() {
 	            long k=max(1);
 	            revert();
 	            update('x',k);
-	            b=a;
+	            for(int i1=0;i1<7;i1++)
+	            for(int j1=0;j1<6;j1++)
+	            b[i1][j1]=a[i1][j1];
 	        }
 	}
 	if(gameover()==1)
