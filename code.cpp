@@ -3,7 +3,14 @@ using namespace std;
 
 char a[6][7],b[6][7];
 long note,i1;
-long Min(int num);
+
+struct polt
+{
+    long scoreA;
+    long scoreB;
+};
+
+polt Min(int num);
 
 bool update(char who,int x)
 {
@@ -15,10 +22,11 @@ bool update(char who,int x)
     {a[i][x]=who;return true;}
 }
 
-
-int score()
+polt score()
 {
-    long i,j,k,l,c,sum=0;
+    long i,j,k,l,c;
+    polt sum;
+    sum.scoreA=0;sum.scoreB=0;
     for(i=0;i<6;i++)
     {
         for(j=0;j<7;j++)
@@ -28,41 +36,41 @@ int score()
             while(a[l++][k++]=='x')                     //right diagonal
             c++;
             if(c==2)
-            sum+=2;
+            sum.scoreA+=2;
             else if(c==3)
-            sum+=20;
+            sum.scoreA+=20;
             else if(c>3)
-            sum+=100;
+            sum.scoreA+=100;
             c=0;
             l=i;k=j;
             while(a[l--][k++]=='x')                     //left diagonal
             c++;
             if(c==2)
-            sum+=2;
+            sum.scoreA+=2;
             else if(c==3)
-            sum+=20;
+            sum.scoreA+=20;
             else if(c>3)
-            sum+=100;
+            sum.scoreA+=100;
             c=0;
             l=i;k=j;
             while(a[l++][k]=='x')                       //right side
             c++;
             if(c==2)
-            sum+=2;
+            sum.scoreA+=2;
             else if(c==3)
-            sum+=20;
+            sum.scoreA+=20;
             else if(c>3)
-            sum+=100;
+            sum.scoreA+=100;
             c=0;
             l=i;k=j;
             while(a[l][k++]=='x')                       //up
             c++;
             if(c==2)
-            sum+=2;
+            sum.scoreA+=2;
             else if(c==3)
-            sum+=20;
+            sum.scoreA+=20;
             else if(c>3)
-            sum+=100;
+            sum.scoreA+=100;
         }
     }
     //For the HOOMAN
@@ -75,51 +83,147 @@ int score()
             while(a[l++][k++]=='o')                     //right diagonal
             c++;
             if(c==2)
-            sum+=-1;
+            sum.scoreA+=-1;
             else if(c==3)
-            sum+=-30;
+            sum.scoreA+=-30;
             else if(c>3)
-            sum+=-200;
+            sum.scoreA+=-2000;
             c=0;
             l=i;k=j;
             while(a[l--][k++]=='o')                     //left diagonal
             c++;
             if(c==2)
-            sum+=-1;
+            sum.scoreA+=-1;
             else if(c==3)
-            sum+=-30;
+            sum.scoreA+=-30;
             else if(c>3)
-            sum+=-200;
+            sum.scoreA+=-2000;
             c=0;
             l=i;k=j;
             while(a[l++][k]=='o')                       //right side
             c++;
             if(c==2)
-            sum+=-1;
+            sum.scoreA+=-1;
             else if(c==3)
-            sum+=-30;
+            sum.scoreA+=-30;
             else if(c>3)
-            sum+=-200;
+            sum.scoreA+=-2000;
             c=0;
             l=i;k=j;
             while(a[l][k++]=='o')                       //up
             c++;
             if(c==2)
-            sum+=-1;
+            sum.scoreA+=-1;
             else if(c==3)
-            sum+=-30;
+            sum.scoreA+=-30;
             else if(c>3)
-            sum+=-200;
+            sum.scoreA+=-2000;
+        }
+    }
+    //SCORE B
+    for(i=0;i<6;i++)
+    {
+        for(j=0;j<7;j++)
+        {
+            c=0;
+            l=i;k=j;
+            while(a[l++][k++]=='o')                     //right diagonal
+            c++;
+            if(c==2)
+            sum.scoreB+=2;
+            else if(c==3)
+            sum.scoreB+=20;
+            else if(c>3)
+            sum.scoreB+=100;
+            c=0;
+            l=i;k=j;
+            while(a[l--][k++]=='x')                     //left diagonal
+            c++;
+            if(c==2)
+            sum.scoreB+=2;
+            else if(c==3)
+            sum.scoreB+=20;
+            else if(c>3)
+            sum.scoreB+=100;
+            c=0;
+            l=i;k=j;
+            while(a[l++][k]=='x')                       //right side
+            c++;
+            if(c==2)
+            sum.scoreB+=2;
+            else if(c==3)
+            sum.scoreB+=20;
+            else if(c>3)
+            sum.scoreB+=100;
+            c=0;
+            l=i;k=j;
+            while(a[l][k++]=='x')                       //up
+            c++;
+            if(c==2)
+            sum.scoreB+=2;
+            else if(c==3)
+            sum.scoreB+=20;
+            else if(c>3)
+            sum.scoreB+=100;
+        }
+    }
+    //For the HOOMAN
+    for(i=0;i<6;i++)
+    {
+        for(j=0;j<7;j++)
+        {
+            c=0;
+            l=i;k=j;
+            while(a[l++][k++]=='o')                     //right diagonal
+            c++;
+            if(c==2)
+            sum.scoreB+=-1;
+            else if(c==3)
+            sum.scoreB+=-30;
+            else if(c>3)
+            sum.scoreB+=-2000;
+            c=0;
+            l=i;k=j;
+            while(a[l--][k++]=='o')                     //left diagonal
+            c++;
+            if(c==2)
+            sum.scoreB+=-1;
+            else if(c==3)
+            sum.scoreB+=-30;
+            else if(c>3)
+            sum.scoreB+=-2000;
+            c=0;
+            l=i;k=j;
+            while(a[l++][k]=='o')                       //right side
+            c++;
+            if(c==2)
+            sum.scoreB+=-1;
+            else if(c==3)
+            sum.scoreB+=-30;
+            else if(c>3)
+            sum.scoreB+=-2000;
+            c=0;
+            l=i;k=j;
+            while(a[l][k++]=='o')                       //up
+            c++;
+            if(c==2)
+            sum.scoreB+=-1;
+            else if(c==3)
+            sum.scoreB+=-30;
+            else if(c>3)
+            sum.scoreB+=-2000;
         }
     }
     return sum;
 }
 
-long Max(int num)
+polt Max(int num)
 {
     if(num>3)
         return score();
-    long i,nux=0,check=0;
+    long i,check=0;
+    polt nux;
+    nux.scoreA=0;nux.scoreB=0;
     for(i=0;i<7;i++)
     {
         char c[7][6];
@@ -128,8 +232,8 @@ long Max(int num)
                c[i1][j1]=a[i1][j1];
         if(update('x',i)==0)
             {check++;continue;}
-        long y=Min(num);
-        if(nux<y)
+        polt y=(Min(num));
+        if(nux.scoreA<y.scoreA)
             {
                 nux=y;
                 if(num==1)
@@ -142,12 +246,14 @@ long Max(int num)
     if(check>6)
     return score();
     else
-    {cout<<nux<<";";return nux;}
+    {return nux;}
 }
 
-long Min(int num)
+polt Min(int num)
 {
-    long i,nux=1000,check=0;
+    long i,check=0;
+    polt nux;
+    nux.scoreA=0;nux.scoreB=0;
     for(i=0;i<7;i++)
     {
         char c[7][6];
@@ -156,8 +262,8 @@ long Min(int num)
                c[i1][j1]=a[i1][j1];
         if(update('x',i)==0)
             {check++;continue;}
-        long y=Max(num+1);
-        if(nux>y)
+        polt y=Max(num+1);
+        if(nux.scoreB<y.scoreB)
             {
                 nux=y;
             }
@@ -168,7 +274,7 @@ long Min(int num)
     if(check>6)
     return score();
     else
-    {cout<<nux<<" ";return nux;}
+    {return nux;}
 }
 
 void revert()
@@ -295,7 +401,8 @@ int main() {
         else
             {
                 long k;
-                Max(1);
+                polt y=Max(1);
+                cout<<y.scoreA<<" "<<y.scoreB<<endl;
                 k=note;
                 revert();
                 update('x',k);
