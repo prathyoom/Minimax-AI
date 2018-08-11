@@ -1,28 +1,27 @@
 #include <iostream>
 using namespace std;
 
-char a[7][6],b[7][6];
-long note;
-for(int i1=0;i1<7;i1++)
-a[i1]="------";
+char a[6][7],b[6][7];
+long note,i1;
+long Min(int num);
 
 bool update(char who,int x)
 {
-    int i=0;
-    while(a[x][i]!='-')i++;
-    if(i>5)
+    int i=5;
+    while(a[i][x]!='-')i--;
+    if(i<0)
     {return false;}
     else
-    {a[x][i]=who;return true;}
+    {a[i][x]=who;return true;}
 }
 
 
 int score()
 {
     long i,j,k,l,c,sum=0;
-    for(i=0;i<7;i++)
+    for(i=0;i<6;i++)
     {
-        for(j=0;j<6;j++)
+        for(j=0;j<7;j++)
         {
             c=0;
             l=i;k=j;
@@ -67,9 +66,9 @@ int score()
         }
     }
     //For the HOOMAN
-    for(i=0;i<7;i++)
+    for(i=0;i<6;i++)
     {
-        for(j=0;j<6;j++)
+        for(j=0;j<7;j++)
         {
             c=0;
             l=i;k=j;
@@ -113,17 +112,20 @@ int score()
             sum+=-200;
         }
     }
-    return sum;   
+    return sum;
 }
 
 long Max(int num)
 {
-    if(num>5)
+    if(num>3)
         return score();
     long i,nux=0,check=0;
     for(i=0;i<7;i++)
     {
-        char c[7][6]=a;
+        char c[7][6];
+        for(int i1=0;i1<6;i1++)
+           for(int j1=0;j1<7;j1++)
+               c[i1][j1]=a[i1][j1];
         if(update('x',i)==0)
             {check++;continue;}
         long y=Min(num);
@@ -132,15 +134,15 @@ long Max(int num)
                 nux=y;
                 if(num==1)
                 note=i;
-            }    
-        for(int i1=0;i1<7;i1++)
-	       for(int j1=0;j1<6;j1++)
-	           a[i1][j1]=c[i1][j1];
+            }
+        for(int i1=0;i1<6;i1++)
+           for(int j1=0;j1<7;j1++)
+               a[i1][j1]=c[i1][j1];
     }
-    if(check>5)
+    if(check>6)
     return score();
     else
-    return nux;
+    {cout<<nux<<";";return nux;}
 }
 
 long Min(int num)
@@ -148,7 +150,10 @@ long Min(int num)
     long i,nux=1000,check=0;
     for(i=0;i<7;i++)
     {
-        char c[7][6]=a;
+        char c[7][6];
+        for(int i1=0;i1<6;i1++)
+           for(int j1=0;j1<7;j1++)
+               c[i1][j1]=a[i1][j1];
         if(update('x',i)==0)
             {check++;continue;}
         long y=Max(num+1);
@@ -156,29 +161,29 @@ long Min(int num)
             {
                 nux=y;
             }
-        for(int i1=0;i1<7;i1++)
-	       for(int j1=0;j1<6;j1++)
-	           a[i1][j1]=c[i1][j1];
+        for(int i1=0;i1<6;i1++)
+           for(int j1=0;j1<7;j1++)
+               a[i1][j1]=c[i1][j1];
     }
-    if(check>5)
+    if(check>6)
     return score();
     else
-    return nux;
+    {cout<<nux<<" ";return nux;}
 }
 
 void revert()
 {
-    for(int i1=0;i1<7;i1++)
-	   for(int j1=0;j1<6;j1++)
+    for(int i1=0;i1<6;i1++)
+       for(int j1=0;j1<7;j1++)
            a[i1][j1]=b[i1][j1];
 }
 
 int gameover()
 {
     long i,j,k,l,c,sum=0;
-    for(i=0;i<7;i++)
+    for(i=0;i<6;i++)
     {
-        for(j=0;j<6;j++)
+        for(j=0;j<7;j++)
         {
             c=0;
             l=i;k=j;
@@ -206,9 +211,9 @@ int gameover()
             return 1;
         }
     }
-    for(i=0;i<7;i++)
+    for(i=0;i<6;i++)
     {
-        for(j=0;j<6;j++)
+        for(j=0;j<7;j++)
         {
             c=0;
             l=i;k=j;
@@ -242,50 +247,69 @@ int gameover()
 void print()
 {
     long i,j;
-    for(i=0;i<7;i++)
+    for(i=0;i<6;i++)
     {
-        for(j=0;j<6;j++)
+        for(j=0;j<7;j++)
             cout<<a[i][j]<<" ";
         cout<<endl;
     }
 }
 
 int main() {
-	long n,x,i;
-	for(i=0;i<42;i++)
-	{
-	    print();
-	    if(gameover())
-	    break;
-	    if(i%2==0)
-	        {
-	            o:
-	            cin>>x;
-	            if(update('o',x-1)==0)
-	            {
-	                cout<<"Enter again :')\n";
-	                goto o;
-	            }
-	            for(int i1=0;i1<7;i1++)
-	            for(int j1=0;j1<6;j1++)
-	            b[i1][j1]=a[i1][j1];
-	        }
-	            
-	    else
-	        {
-	            long k=max(1);
-	            revert();
-	            update('x',k);
-	            for(int i1=0;i1<7;i1++)
-	            for(int j1=0;j1<6;j1++)
-	            b[i1][j1]=a[i1][j1];
-	        }
-	}
-	if(gameover()==1)
-	cout<<"AI :) \n";
-	else if(gameover()==2)
-	cout<<"HOOMAN :)) \n";
-	else
-	cout<<"TIE \n";
-	return 0;
+    long n,x,i,j1;
+    for(i1=0;i1<6;i1++)
+        for(j1=0;j1<7;j1++)
+           a[i1][j1]='-';
+    /*cin>>n;
+    update('x',n-1);
+    cin>>n;
+    update('x',n-1);
+    update('x',0);
+    update('o',3);
+    update('x',1);
+    update('x',1);
+    update('o',3);
+    update('x',2);
+    update('o',3);
+    update('o',3);
+    */
+    for(i=0;i<42;i++)
+    {
+        if(gameover())
+        break;
+        if(i%2==0)
+            {
+                print();
+                o:
+                cin>>x;
+                if(update('o',x-1)==0)
+                {
+                    cout<<"Enter again :')\n";
+                    goto o;
+                }
+                for(int i1=0;i1<6;i1++)
+                for(int j1=0;j1<7;j1++)
+                b[i1][j1]=a[i1][j1];
+            }
+
+        else
+            {
+                long k;
+                Max(1);
+                k=note;
+                revert();
+                update('x',k);
+                for(int i1=0;i1<6;i1++)
+                for(int j1=0;j1<7;j1++)
+                b[i1][j1]=a[i1][j1];
+            }
+    }
+    print();
+    if(gameover()==1)
+    cout<<"AI :) \n";
+    else if(gameover()==2)
+    cout<<"HOOMAN :)) \n";
+    else
+    cout<<"TIE \n";
+    return 0;
 }
