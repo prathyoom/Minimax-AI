@@ -17,9 +17,13 @@ bool update(char who,int x)
     int i=5;
     while(a[i][x]!='-')i--;
     if(i<0)
-    {return false;}
+    {
+        return false;
+    }
     else
-    {a[i][x]=who;return true;}
+    {
+        a[i][x]=who;return true;
+    }
 }
 
 polt score()
@@ -42,7 +46,7 @@ polt score()
             else if(c>3)
             sum.scoreA+=100;
             c=0;
-            l=i;k=j;
+            l=5;k=j;
             while(a[l--][k++]=='x')                     //left diagonal
             c++;
             if(c==2)
@@ -127,7 +131,7 @@ polt score()
         {
             c=0;
             l=i;k=j;
-            while(a[l++][k++]=='o')                     //right diagonal
+            while(a[l++][k++]=='x')                     //right diagonal
             c++;
             if(c==2)
             sum.scoreB+=2;
